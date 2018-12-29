@@ -7,7 +7,7 @@ import authRequests from '../../helpers/data/authRequests';
 
 class ListingItem extends React.Component {
   static propTypes = {
-    listing: listingShape,
+    listing: listingShape.listingShape,
     deleteSingleListing: PropTypes.func,
     passListingToEdit: PropTypes.func,
   }
@@ -24,6 +24,11 @@ editEvent = (e) => {
   passListingToEdit(listing.id);
 }
 
+listingClick = (e) => {
+  e.stopPropagation();
+  const { listing, onSelect } = this.props;
+  onSelect(listing.id);
+}
 
 render() {
   const { listing } = this.props;
@@ -49,6 +54,7 @@ render() {
   };
   return (
     <li className= "listing-item text-center">
+    <li className="listing-item text-center" onClick={this.listingClick}></li>
       <span className="col-7">{listing.address}</span>
       <span className="col-3">{formatPrice(listing.price)}</span>
       {makeButtons()}
